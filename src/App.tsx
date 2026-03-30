@@ -1,10 +1,13 @@
+import { useState } from "react";
 import styles from "./App.module.css";
 import { MasonryPhotoAlbum, type Photo } from "react-photo-album";
 
-import photosJson from "./assets/images.json";
+import thumnailsJson from "./assets/images.json";
 
 function App() {
-  const photos: Photo[] = photosJson;
+  const photoThumbnails: Photo[] = thumnailsJson;
+  const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
+
   return (
     <main>
       <div className={styles.header}>
@@ -22,7 +25,7 @@ function App() {
       </div>
       <div style={{ width: "100%", height: "80vh", margin: "20px" }}>
         <MasonryPhotoAlbum
-          photos={photos}
+          photos={photoThumbnails}
           columns={(containerWidth) => {
             if (containerWidth < 400) return 2;
             if (containerWidth < 800) return 3;
@@ -30,11 +33,28 @@ function App() {
           }}
           componentsProps={{
             container: { style: { display: "flex", flexDirection: "row" } },
-            wrapper: { style: { width: "100%", padding: "10px" } },
+            wrapper: {
+              style: { width: "100%", padding: "10px", cursor: "pointer" },
+            },
             image: { style: { width: "100%" } },
           }}
+          onClick={({ photo }) => setSelectedPhoto(photo)}
         />
       </div>
+
+      {selectedPhoto && (
+        <div
+          className={styles.lightboxBackdrop}
+          onClick={() => setSelectedPhoto(null)}
+        >
+          <img
+            className={styles.lightboxImage}
+            src={selectedPhoto.src.replace("/thumbnails/", "/originals/")}
+            alt={selectedPhoto.alt ?? ""}
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
     </main>
   );
 }
