@@ -5,7 +5,7 @@ import "react-photo-album/masonry.css";
 
 import originalsJson from "./assets/originals.json";
 
-const photos: Photo[] = originalsJson.map((thumb, i) => ({
+const photos: Photo[] = originalsJson.map((thumb) => ({
   ...thumb,
   width: 200,
   height: Math.round((thumb.height / thumb.width) * 200),
