@@ -46,11 +46,11 @@ function App() {
         <MasonryPhotoAlbum
           photos={photos}
           columns={(containerWidth) => {
-            if (containerWidth < 400) return 2;
-            if (containerWidth < 800) return 3;
+            if (containerWidth < 500) return 2;
+            if (containerWidth < 1000) return 3;
             return 5;
           }}
-          spacing={10}
+          spacing={30}
           onClick={({ photo }) => setSelectedPhoto(photo as PhotoWithOriginal)}
         />
       </div>
