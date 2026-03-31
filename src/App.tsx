@@ -1,9 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./App.module.css";
 import { MasonryPhotoAlbum, type Photo } from "react-photo-album";
 import "react-photo-album/masonry.css";
-
-import originalsJson from "./assets/originals.json";
 
 type ArtPhoto = Photo & {
   title: string;
@@ -13,13 +11,23 @@ type ArtPhoto = Photo & {
   size: string;
 };
 
-const photos: ArtPhoto[] = originalsJson.map((thumb) => ({
-  ...thumb,
-  width: 200,
-  height: Math.round((thumb.height / thumb.width) * 200),
-}));
-
 function App() {
+  const [photos, setPhotos] = useState<ArtPhoto[]>([]);
+
+  useEffect(() => {
+    fetch("/originals.json")
+      .then((r) => r.json())
+      .then((data) =>
+        setPhotos(
+          data.map((item: ArtPhoto) => ({
+            ...item,
+            width: 200,
+            height: Math.round((item.height / item.width) * 200),
+          })),
+        ),
+      );
+  }, []);
+
   const [selectedPhoto, setSelectedPhoto] = useState<ArtPhoto | null>(null);
 
   return (
