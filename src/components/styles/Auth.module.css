@@ -1,0 +1,78 @@
+.authWrapper {
+  background-color: white;
+  border: none;
+  border-radius: var(--space-s);
+  padding: var(--space-m) var(--space-s);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 400px;
+  gap: var(--space-m);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header * {
+  margin: 0;
+}
+
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 100%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: var(--space-xs);
+}
+
+.actionBtn {
+  width: 40%;
+}
+
+.redirect {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xl);
+}
+
+.redirectBtn {
+  color: blue;
+}
+
+.redirectBtn:hover {
+  cursor: pointer;
+}
+
+.redirectBtn::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 1px;
+  border-radius: 1rem;
+  margin: 0 auto;
+  background-color: blue;
+  transition: width 0.2s ease;
+}
+
+.redirectBtn:hover::after {
+  width: 100%;
+}
+
+.showPassBtn {
+  display: flex;
+  align-items: center;
+}
+
+.showPassBtn:hover {
+  cursor: pointer;
+}

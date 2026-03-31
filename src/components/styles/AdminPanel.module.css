@@ -1,0 +1,13 @@
+.adminPanel {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-xl) var(--space-l);
+  gap: var(--space-s);
+  border-radius: var(--space-s);
+}
+
+.inputField {
+  width: 100%;
+}
