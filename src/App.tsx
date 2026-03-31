@@ -3,22 +3,16 @@ import styles from "./App.module.css";
 import { MasonryPhotoAlbum, type Photo } from "react-photo-album";
 import "react-photo-album/masonry.css";
 
-import thumbnailsJson from "./assets/thumbnails.json";
 import originalsJson from "./assets/originals.json";
 
-type PhotoWithOriginal = Photo & { originalSrc: string };
-
-const photos: PhotoWithOriginal[] = thumbnailsJson.map((thumb, i) => ({
+const photos: Photo[] = originalsJson.map((thumb, i) => ({
   ...thumb,
-  originalSrc: originalsJson[i].src,
   width: 200,
   height: Math.round((thumb.height / thumb.width) * 200),
 }));
 
 function App() {
-  const [selectedPhoto, setSelectedPhoto] = useState<PhotoWithOriginal | null>(
-    null,
-  );
+  const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
 
   return (
     <main>
@@ -48,10 +42,10 @@ function App() {
           columns={(containerWidth) => {
             if (containerWidth < 500) return 2;
             if (containerWidth < 1000) return 3;
-            return 5;
+            return 4;
           }}
           spacing={30}
-          onClick={({ photo }) => setSelectedPhoto(photo as PhotoWithOriginal)}
+          onClick={({ photo }) => setSelectedPhoto(photo as Photo)}
         />
       </div>
 
@@ -62,7 +56,7 @@ function App() {
         >
           <img
             className={styles.lightboxImage}
-            src={selectedPhoto.originalSrc}
+            src={selectedPhoto.src}
             alt={selectedPhoto.alt ?? ""}
             onClick={(e) => e.stopPropagation()}
           />
