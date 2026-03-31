@@ -34,15 +34,6 @@
   object-fit: contain;
 }
 
-@media (min-width: 700px) {
-  .header {
-    flex-direction: row;
-    height: min-content;
-    width: auto;
-    max-width: 300px;
-  }
-}
-
 .lightboxBackdrop {
   position: fixed;
   inset: 0;

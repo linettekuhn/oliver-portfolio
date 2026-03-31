@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styles from "./App.module.css";
 import { MasonryPhotoAlbum, type Photo } from "react-photo-album";
+import "react-photo-album/masonry.css";
 
 import thumbnailsJson from "./assets/thumbnails.json";
 import originalsJson from "./assets/originals.json";
@@ -10,6 +11,8 @@ type PhotoWithOriginal = Photo & { originalSrc: string };
 const photos: PhotoWithOriginal[] = thumbnailsJson.map((thumb, i) => ({
   ...thumb,
   originalSrc: originalsJson[i].src,
+  width: 200,
+  height: Math.round((thumb.height / thumb.width) * 200),
 }));
 
 function App() {
@@ -32,7 +35,14 @@ function App() {
           <h2 className={styles.title}>fine artist</h2>
         </div>
       </div>
-      <div style={{ width: "100%", height: "80vh", margin: "20px" }}>
+      <div
+        style={{
+          width: "100%",
+          alignSelf: "stretch",
+          padding: "0 20px",
+          boxSizing: "border-box",
+        }}
+      >
         <MasonryPhotoAlbum
           photos={photos}
           columns={(containerWidth) => {
@@ -40,13 +50,7 @@ function App() {
             if (containerWidth < 800) return 3;
             return 5;
           }}
-          componentsProps={{
-            container: { style: { display: "flex", flexDirection: "row" } },
-            wrapper: {
-              style: { width: "100%", padding: "10px", cursor: "pointer" },
-            },
-            image: { style: { width: "100%" } },
-          }}
+          spacing={10}
           onClick={({ photo }) => setSelectedPhoto(photo as PhotoWithOriginal)}
         />
       </div>

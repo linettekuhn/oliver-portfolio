@@ -71,7 +71,7 @@ main {
   padding: var(--space-4xl) var(--space-2xs) var(--space-m) var(--space-2xs);
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   justify-content: flex-start;
   overflow-x: hidden;
 }
