@@ -2,7 +2,7 @@ import { Router } from "express";
 import multer from "multer";
 import path from "path";
 import { authMiddleware } from "../middleware/authMiddleware";
-import { uploadImage } from "../controllers/upload.controller";
+import { deleteImage, uploadImage } from "../controllers/upload.controller";
 import { env } from "../config/env";
 
 // set destination and filepath for file save
@@ -31,4 +31,6 @@ const router = Router();
 
 // tell multer to look for one file in the request under field name "image"
 router.post("/", authMiddleware, upload.single("image"), uploadImage);
+router.delete("/:filename", authMiddleware, deleteImage);
+
 export default router;

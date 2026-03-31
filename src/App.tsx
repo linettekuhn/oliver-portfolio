@@ -51,7 +51,6 @@ function App() {
       buffer += e.key.toLowerCase();
       if (buffer.endsWith("u")) {
         setShowLogin(true);
-        console.log("open admin panel");
       }
       if (buffer.length > 10) buffer = buffer.slice(-10);
     };

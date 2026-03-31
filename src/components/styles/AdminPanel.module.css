@@ -6,8 +6,30 @@
   padding: var(--space-xl) var(--space-l);
   gap: var(--space-s);
   border-radius: var(--space-s);
+  max-height: 95vh;
+  overflow: scroll;
 }
 
 .inputField {
   width: 100%;
+}
+
+.imageList {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: var(--space-xs);
+}
+
+.imageRow {
+  display: flex;
+  width: 100%;
+  gap: var(--space-l);
+}
+
+.imageMeta {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-s);
 }

@@ -335,8 +335,14 @@ h1 {
   text-transform: uppercase;
 }
 
-button {
+button,
+.button {
   border: none;
-  padding: 0;
+  padding: var(--space-3xs) var(--space-xs);
   margin: 0;
+}
+
+button:hover,
+.button {
+  cursor: pointer;
 }

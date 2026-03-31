@@ -35,10 +35,6 @@
   gap: var(--space-xs);
 }
 
-.actionBtn {
-  width: 40%;
-}
-
 .redirect {
   display: flex;
   align-items: center;

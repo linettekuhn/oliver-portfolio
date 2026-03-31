@@ -6,7 +6,6 @@ import styles from "./styles/Auth.module.css";
 import CapsuleInput from "./CapsuleInput";
 import { MdAlternateEmail, MdPassword } from "react-icons/md";
 import { RiEyeFill, RiEyeCloseLine } from "react-icons/ri";
-import { motion } from "motion/react";
 
 export function Auth() {
   const { login } = useAuth();
@@ -68,15 +67,12 @@ export function Auth() {
           </CapsuleInput>
         </div>
       </div>
-      <motion.div
+      <button
         className={`button ${styles.actionBtn} ${isPending ? "disabled" : ""}`}
         onClick={isPending ? undefined : handleLogin}
-        whileHover={{ scale: 1.03 }}
-        whileTap={{ scale: 0.97 }}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
       >
         {isPending ? "Logging in…" : "Log in"}
-      </motion.div>
+      </button>
     </div>
   );
 }
