@@ -26,7 +26,7 @@ export async function uploadImage(
     // build new JSON entry
     const filename = req.file.filename;
     const newEntry = {
-      src: `/images/originals/${filename}`,
+      src: `/images/${filename}`,
       width,
       height,
       title,
@@ -62,7 +62,7 @@ export async function deleteImage(
     const jsonRaw = fs.readFileSync(env.JSON_PATH, "utf-8");
     const entries: { src: string }[] = JSON.parse(jsonRaw);
 
-    const src = `/images/originals/${filename}`;
+    const src = `/images/${filename}`;
     const exists = entries.some((e) => e.src === src);
     if (!exists) throw new AppError(404, "Image not found in records");
 
