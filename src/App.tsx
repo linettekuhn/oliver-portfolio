@@ -16,12 +16,16 @@ type ArtPhoto = Photo & {
 };
 
 function mapPhotos(data: ArtPhoto[]): ArtPhoto[] {
-  return data.map((item) => ({
-    ...item,
-    width: 200,
-    height: Math.round((item.height / item.width) * 200),
-    src: `https://cuelloart.com${item.src}`,
-  }));
+  return data.map((item) => {
+    const srcUrl = `https://cuelloart.com${item.src}`;
+    console.log("Mapping photo:", item.src, "->", srcUrl); // log each src
+    return {
+      ...item,
+      width: 200,
+      height: Math.round((item.height / item.width) * 200),
+      src: srcUrl,
+    };
+  });
 }
 
 function App() {
@@ -33,9 +37,17 @@ function App() {
   // fetch photos from JSON
   async function fetchPhotos() {
     try {
+      console.log("Fetching originals.json...");
       const res = await fetch(`/originals.json?${Date.now()}`);
+      if (!res.ok) {
+        console.error("Failed to fetch originals.json, status:", res.status);
+        return;
+      }
       const data = await res.json();
-      setPhotos(mapPhotos(data));
+      console.log("Fetched data:", data);
+      const mapped = mapPhotos(data);
+      console.log("Mapped photos:", mapped);
+      setPhotos(mapped);
     } catch (err) {
       console.error("Failed to fetch photos:", err);
     }
