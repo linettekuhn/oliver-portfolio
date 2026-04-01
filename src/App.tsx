@@ -20,6 +20,7 @@ function mapPhotos(data: ArtPhoto[]): ArtPhoto[] {
     ...item,
     width: 200,
     height: Math.round((item.height / item.width) * 200),
+    src: `https://cuelloart.com${item.src}`,
   }));
 }
 
@@ -29,7 +30,7 @@ function App() {
   const [selectedPhoto, setSelectedPhoto] = useState<ArtPhoto | null>(null);
   const [showLogin, setShowLogin] = useState(false);
 
-  // fetch photos from JSON in backend
+  // fetch photos from JSON
   async function fetchPhotos() {
     try {
       const res = await fetch(`/originals.json?${Date.now()}`);
