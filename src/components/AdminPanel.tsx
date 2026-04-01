@@ -36,9 +36,19 @@ export function AdminPanel({ onUpload }: { onUpload: () => Promise<void> }) {
   const [deletingFilename, setDeletingFilename] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("/originals.json?" + Date.now())
-      .then((r) => r.json())
-      .then(setEntries);
+    const apiUrl = `${import.meta.env.VITE_API_URL}/originals.json?${Date.now()}`;
+    console.log("Fetching originals.json for admin panel:", apiUrl);
+
+    fetch(apiUrl)
+      .then((r) => {
+        if (!r.ok) throw new Error(`Fetch failed: ${r.status}`);
+        return r.json();
+      })
+      .then((data) => {
+        console.log("Fetched entries for admin panel:", data);
+        setEntries(data);
+      })
+      .catch((err) => console.error("Error fetching originals.json:", err));
   }, []);
 
   if (!user) return null;

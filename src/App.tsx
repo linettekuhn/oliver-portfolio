@@ -37,8 +37,9 @@ function App() {
   // fetch photos from JSON
   async function fetchPhotos() {
     try {
-      console.log("Fetching originals.json...");
-      const res = await fetch(`/originals.json?${Date.now()}`);
+      const apiUrl = `${import.meta.env.VITE_API_URL}/originals.json?${Date.now()}`;
+      console.log("Fetching originals.json from API:", apiUrl);
+      const res = await fetch(apiUrl);
       if (!res.ok) {
         console.error("Failed to fetch originals.json, status:", res.status);
         return;
