@@ -15,6 +15,10 @@ app.use(cors({ origin: env.ALLOWED_ORIGIN, credentials: true }));
 app.use(express.json());
 app.use(errorHandler);
 
+app.get("/", (req, res) => {
+  res.send("Oliver portfolio backend is running");
+});
+
 app.use("/auth", authRouter);
 app.use("/upload", uploadRouter);
 
