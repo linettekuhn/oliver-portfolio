@@ -7,6 +7,8 @@ import uploadRouter from "./routes/upload.routes";
 import { env } from "./config/env";
 import { errorHandler } from "./middleware/errorHandler";
 import { requestLogger } from "./middleware/requestLogger";
+import path from "path";
+import fs from "fs";
 
 const app = express();
 app.use(cookieParser());
@@ -21,6 +23,12 @@ app.get("/", (req, res) => {
 
 app.use("/auth", authRouter);
 app.use("/upload", uploadRouter);
+app.get("/originals.json", (_req, res) => {
+  const jsonPath = env.JSON_PATH;
+  if (!fs.existsSync(jsonPath))
+    return res.status(404).send({ error: "Not found" });
+  res.sendFile(path.resolve(jsonPath));
+});
 
 app.listen(env.PORT, () =>
   console.log(`Oliver API running on port ${env.PORT}`),

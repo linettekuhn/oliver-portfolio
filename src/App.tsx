@@ -29,18 +29,26 @@ function App() {
   const [selectedPhoto, setSelectedPhoto] = useState<ArtPhoto | null>(null);
   const [showLogin, setShowLogin] = useState(false);
 
+  // fetch photos from JSON in backend
   async function fetchPhotos() {
-    const res = await fetch("/originals.json?" + Date.now());
-    const data = await res.json();
-    setPhotos(mapPhotos(data));
+    try {
+      const res = await fetch(`/originals.json?${Date.now()}`);
+      const data = await res.json();
+      setPhotos(mapPhotos(data));
+    } catch (err) {
+      console.error("Failed to fetch photos:", err);
+    }
   }
 
+  // load photos once on mount
   useEffect(() => {
-    fetch("/originals.json?" + Date.now())
-      .then((r) => r.json())
-      .then((data) => setPhotos(mapPhotos(data)));
+    const loadPhotos = async () => {
+      await fetchPhotos();
+    };
+    loadPhotos();
   }, []);
 
+  // keyboard secret login trigger
   useEffect(() => {
     let buffer = "";
     const handler = (e: KeyboardEvent) => {
@@ -57,6 +65,7 @@ function App() {
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, []);
+
   return (
     <>
       <main>
@@ -73,6 +82,7 @@ function App() {
             <h2 className={styles.title}>fine artist</h2>
           </div>
         </div>
+
         <div
           style={{
             width: "100%",
@@ -139,6 +149,7 @@ function App() {
           </div>
         )}
       </main>
+
       <ToastContainer
         position="bottom-center"
         autoClose={5000}
