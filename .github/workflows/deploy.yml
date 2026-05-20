@@ -1,0 +1,53 @@
+# the name of the workflow
+name: Deploy to VPS
+
+# when to run
+on:
+  push:
+    branches:
+      - main
+
+# the work to do
+jobs:
+  deploy: # name of job
+    runs-on: ubuntu-latest # OS to use for runner
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true # silence warning
+
+    steps: # list of steps to do in order
+      - name: Checkout code
+        uses: actions/checkout@v4.2.2 # clones repo onto runner (so we have the workflow file + context)
+
+      - name: Set up SSH
+        # store ssh key from secrets and add VPS fingerprint to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy via SSH
+        # SSH into VPS, pull latest code, install deps, build, and restart backend
+        run: |
+          ssh -i ~/.ssh/deploy_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
+            set -e # exit on any error
+
+            # navigate to project
+            cd ~/apps/oliver/oliver-portfolio
+
+            # pull latest code from GitHub
+            git pull origin main
+
+            # install frontend dependencies and build (outputs to dist/)
+            npm ci
+            npm run build
+
+            # install backend dependencies and compile TypeScript (outputs to backend/dist/)
+            cd backend
+            npm ci
+            npm run build
+
+            # return to project root and restart Express server via PM2
+            cd ..
+            pm2 restart oliver-backend
+          EOF
