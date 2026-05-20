@@ -1,0 +1,33 @@
+.layout {
+  max-width: 90vw;
+  margin: 0 auto;
+  gap: 90px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 4rem;
+  margin-top: 4rem;
+}
+
+.text {
+  font-size: 18px;
+  line-height: 1.6;
+  max-width: 600px;
+}
+
+.image {
+  max-width: 500px;
+  height: auto;
+  border-radius: 4px;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .image {
+    max-width: 100%;
+  }
+}
