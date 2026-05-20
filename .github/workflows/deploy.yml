@@ -32,6 +32,10 @@ jobs:
           ssh -i ~/.ssh/deploy_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
             set -e # exit on any error
 
+            # load nvm so node/npm/pm2 are in PATH (non-interactive shell fix)
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
             # navigate to project
             cd ~/apps/oliver/oliver-portfolio
 
