@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
+import { Routes, Route } from "react-router-dom";
 import styles from "./App.module.css";
 import { MasonryPhotoAlbum, type Photo } from "react-photo-album";
 import "react-photo-album/masonry.css";
 import { useAuth } from "./context/AuthContext";
+import Header from "./components/Header";
+import About from "./About";
 import { AdminPanel } from "./components/AdminPanel";
 import { Bounce, ToastContainer } from "react-toastify";
 import { Auth } from "./components/Auth";
@@ -83,85 +86,83 @@ function App() {
   return (
     <>
       <main>
-        <div className={styles.header}>
-          <div className={styles.logoWrapper}>
-            <img
-              className={styles.logo}
-              src="/icons/logo_with_text.png"
-              alt="Logo"
-            />
-          </div>
-          <div className={styles.titles}>
-            <h2 className={styles.title}>illustrator</h2>
-            <h2 className={styles.title}>fine artist</h2>
-          </div>
-        </div>
+        <Header />
 
-        <div
-          style={{
-            width: "100%",
-            alignSelf: "stretch",
-            padding: "0 20px",
-            boxSizing: "border-box",
-          }}
-        >
-          <MasonryPhotoAlbum
-            photos={photos}
-            columns={(containerWidth) => {
-              if (containerWidth < 500) return 2;
-              if (containerWidth < 1000) return 3;
-              return 4;
-            }}
-            spacing={30}
-            onClick={({ photo }) => setSelectedPhoto(photo as ArtPhoto)}
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <div
+                  style={{
+                    width: "100%",
+                    alignSelf: "stretch",
+                    padding: "0 20px",
+                    boxSizing: "border-box",
+                  }}
+                >
+                  <MasonryPhotoAlbum
+                    photos={photos}
+                    columns={(containerWidth) => {
+                      if (containerWidth < 500) return 2;
+                      if (containerWidth < 1000) return 3;
+                      return 4;
+                    }}
+                    spacing={30}
+                    onClick={({ photo }) => setSelectedPhoto(photo as ArtPhoto)}
+                  />
+                </div>
+
+                {selectedPhoto && (
+                  <div
+                    className={styles.lightboxBackdrop}
+                    onClick={() => setSelectedPhoto(null)}
+                  >
+                    <div className={styles.imageWrapper}>
+                      <img
+                        className={styles.lightboxImage}
+                        src={selectedPhoto.src}
+                        alt={selectedPhoto.alt ?? ""}
+                        onClick={(e) => e.stopPropagation()}
+                      />
+                      <div className={styles.description}>
+                        <h2>
+                          {selectedPhoto.title}, {selectedPhoto.year}
+                        </h2>
+                        <p>
+                          {selectedPhoto.medium.charAt(0).toUpperCase() +
+                            selectedPhoto.medium.slice(1)}{" "}
+                          on {selectedPhoto.surface.toLowerCase()} |{" "}
+                          {selectedPhoto.size}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {showLogin && (
+                  <div
+                    style={{
+                      position: "fixed",
+                      inset: 0,
+                      background: "rgba(0,0,0,0.5)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      zIndex: 999,
+                    }}
+                    onClick={() => setShowLogin(false)}
+                  >
+                    <div onClick={(e) => e.stopPropagation()}>
+                      {user ? <AdminPanel onUpload={fetchPhotos} /> : <Auth />}
+                    </div>
+                  </div>
+                )}
+              </>
+            }
           />
-        </div>
-
-        {selectedPhoto && (
-          <div
-            className={styles.lightboxBackdrop}
-            onClick={() => setSelectedPhoto(null)}
-          >
-            <div className={styles.imageWrapper}>
-              <img
-                className={styles.lightboxImage}
-                src={selectedPhoto.src}
-                alt={selectedPhoto.alt ?? ""}
-                onClick={(e) => e.stopPropagation()}
-              />
-              <div className={styles.description}>
-                <h2>
-                  {selectedPhoto.title}, {selectedPhoto.year}
-                </h2>
-                <p>
-                  {selectedPhoto.medium.charAt(0).toUpperCase() +
-                    selectedPhoto.medium.slice(1)}{" "}
-                  on {selectedPhoto.surface.toLowerCase()} |{" "}
-                  {selectedPhoto.size}
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {showLogin && (
-          <div
-            style={{
-              position: "fixed",
-              inset: 0,
-              background: "rgba(0,0,0,0.5)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              zIndex: 999,
-            }}
-            onClick={() => setShowLogin(false)}
-          >
-            <div onClick={(e) => e.stopPropagation()}>
-              {user ? <AdminPanel onUpload={fetchPhotos} /> : <Auth />}
-            </div>
-          </div>
-        )}
+          <Route path="/about" element={<About />} />
+        </Routes>
       </main>
 
       <ToastContainer

@@ -47,7 +47,6 @@ h1 {
 html,
 #root {
   min-height: 100%;
-  overscroll-behavior: contain;
   overflow-x: hidden;
 }
 
@@ -68,7 +67,6 @@ main {
   width: 100vw;
   min-height: 100vh;
   flex: 1;
-  padding: var(--space-4xl) var(--space-2xs) var(--space-m) var(--space-2xs);
   display: flex;
   flex-direction: column;
   align-items: stretch;
