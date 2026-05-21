@@ -6,6 +6,7 @@ import "react-photo-album/masonry.css";
 import { useAuth } from "./context/AuthContext";
 import Header from "./components/Header";
 import About from "./About";
+import Contact from "./Contact";
 import { AdminPanel } from "./components/AdminPanel";
 import { Bounce, ToastContainer } from "react-toastify";
 import { Auth } from "./components/Auth";
@@ -162,6 +163,7 @@ function App() {
             }
           />
           <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
         </Routes>
       </main>
 
