@@ -36,7 +36,7 @@ export default function Header() {
         <Link to="/">
           <img
             className={styles.logo}
-            src={canHover && !isHovered ? "/images/logo_static.jpg" : "/gifs/logo_animated.gif"}
+            src={canHover && !isHovered ? "/gifs/logo_static.jpg" : "/gifs/logo_animated.gif"}
             alt="Logo"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
