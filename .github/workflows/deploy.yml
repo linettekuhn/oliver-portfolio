@@ -40,7 +40,8 @@ jobs:
             cd ~/apps/oliver/oliver-portfolio
 
             # pull latest code from GitHub
-            git pull origin main
+            git fetch origin
+            git reset --hard origin/main
 
             # install frontend dependencies and build (outputs to dist/)
             npm ci
