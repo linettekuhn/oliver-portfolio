@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./styles/Header.module.css";
 
@@ -17,15 +18,20 @@ const socials = [
 ];
 
 export default function Header() {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
     <div className={styles.header}>
       <div className={styles.logoWrapper}>
         <Link to="/">
           <img
             className={styles.logo}
-            src="/gifs/logo_animated.gif"
+            src={isHovered ? "/gifs/logo_animated.gif" : "/images/logo_static.jpg"}
             alt="Logo"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
           />
+          <h1 className={styles.logoText}>oliver cuello</h1>
         </Link>
       </div>
       <div className={styles.titlesContainer}>
