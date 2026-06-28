@@ -23,7 +23,7 @@ export default function Header() {
         <Link to="/">
           <img
             className={styles.logo}
-            src="/icons/logo_with_text.png"
+            src="/gifs/logo_animated.gif"
             alt="Logo"
           />
         </Link>
@@ -45,7 +45,7 @@ export default function Header() {
         ))}
       </div>
 
-      <div style={{display: "flex", gap: "20px"}}>
+      <div style={{ display: "flex", gap: "20px" }}>
         <Link className={styles.links} to="/about">
           About
         </Link>
