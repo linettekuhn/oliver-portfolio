@@ -22,7 +22,7 @@
   text-transform: capitalize;
   width: 100%;
   position: absolute;
-  bottom: calc(-1 * var(--space-l));
+  bottom: calc(-1 * var(--space-xl));
   left: 50%;
   transform: translateX(-50%);
 }

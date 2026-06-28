@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "./styles/Header.module.css";
 
@@ -19,6 +19,16 @@ const socials = [
 
 export default function Header() {
   const [isHovered, setIsHovered] = useState(false);
+  const [canHover, setCanHover] = useState(() =>
+    window.matchMedia("(hover: hover)").matches
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia("(hover: hover)");
+    const handler = (e: MediaQueryListEvent) => setCanHover(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
 
   return (
     <div className={styles.header}>
@@ -26,7 +36,7 @@ export default function Header() {
         <Link to="/">
           <img
             className={styles.logo}
-            src={isHovered ? "/gifs/logo_animated.gif" : "/images/logo_static.jpg"}
+            src={canHover && !isHovered ? "/images/logo_static.jpg" : "/gifs/logo_animated.gif"}
             alt="Logo"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
